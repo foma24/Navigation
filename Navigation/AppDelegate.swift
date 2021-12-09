@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         feedBarItem.image = UIImage(systemName: "doc.plaintext")
         feedBarItem.selectedImage = UIImage(systemName: "doc.plaintext.fill")
         let feedVC = FeedViewController()
+        feedVC.view.backgroundColor = .white
         feedVC.title = "Feed"
         let feedNavigationController = UINavigationController(rootViewController: feedVC)
         feedVC.tabBarItem = feedBarItem
@@ -25,12 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileBarItem.image = UIImage(systemName: "folder")
         profileBarItem.selectedImage = UIImage(systemName: "folder.fill")
         let profileVC = ProfileViewController()
+        profileVC.view.backgroundColor = .white
         profileVC.title = "Profile"
         let profileNavigationController = UINavigationController(rootViewController: profileVC)
         profileVC.tabBarItem = profileBarItem
         
         //MARK: Tab Bar
         let tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = .white
         tabBarController.viewControllers = [feedNavigationController, profileNavigationController]
         tabBarController.selectedIndex = 0
         

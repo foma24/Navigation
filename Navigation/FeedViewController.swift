@@ -2,21 +2,50 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
+    let firshButton = UIButton(type: .system)
+    let secondButton = UIButton(type: .system)
+    let stackView = UIStackView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //MARK: Background
         view.backgroundColor = .white
         
-        //MARK: Post button
-        let postButton = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
-        postButton.backgroundColor = .red
-        postButton.setTitle("POST", for: .normal)
-        postButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        self.view.addSubview(postButton)
+        //MARK: firshButton
+        firshButton.setTitle("Button ONE", for: .normal)
+        firshButton.setTitleColor(.white, for: .normal)
+        firshButton.backgroundColor = .red
+        firshButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(firshButton)
+        firshButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
+        //MARK: secondButton
+        secondButton.setTitle("Button TWO", for: .normal)
+        secondButton.setTitleColor(.white, for: .normal)
+        secondButton.backgroundColor = .blue
+        secondButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(secondButton)
+        secondButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
+        //MARK: stackView
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.addArrangedSubview(firshButton)
+        stackView.addArrangedSubview(secondButton)
+        view.addSubview(stackView)
+        
+        //MARK: Constraints
+        NSLayoutConstraint.activate([
+            
+            //MARK: stackView
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+         ])
     }
     
-    //MARK: - Post button tapped
+    //MARK: Buttons tapped
     @objc func buttonAction(sender: UIButton!) {
         let postVC = PostViewController()
         navigationController?.pushViewController(postVC, animated: true)
