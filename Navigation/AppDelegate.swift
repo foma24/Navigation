@@ -26,15 +26,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileBarItem.image = UIImage(systemName: "folder")
         profileBarItem.selectedImage = UIImage(systemName: "folder.fill")
         let profileVC = ProfileViewController()
-        profileVC.view.backgroundColor = .white
         profileVC.title = "Profile"
         let profileNavigationController = UINavigationController(rootViewController: profileVC)
-        profileVC.tabBarItem = profileBarItem
+        profileNavigationController.navigationBar.isHidden = true
+        
+        let loginVC = LogInViewController()
+        loginVC.view.backgroundColor = .white
+        let loginNavigationController = UINavigationController(rootViewController: loginVC)
+        loginNavigationController.navigationBar.isHidden = true
+        loginVC.tabBarItem = profileBarItem
         
         //MARK: Tab Bar
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
-        tabBarController.viewControllers = [feedNavigationController, profileNavigationController]
+        tabBarController.viewControllers = [feedNavigationController, loginNavigationController]
         tabBarController.selectedIndex = 0
         
         window?.rootViewController = tabBarController

@@ -7,6 +7,8 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
         //MARK: ProfileHeader
         let profileView = ProfileHeaderView(frame: self.view.frame)
         view.addSubview(profileView)

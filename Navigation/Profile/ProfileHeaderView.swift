@@ -9,7 +9,7 @@ class ProfileHeaderView: UIView {
     let image = UIImage(named: "dog")
     let avatarImageView = UIImageView()
     let setStatusButton = UIButton(type: .system)
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -66,7 +66,7 @@ class ProfileHeaderView: UIView {
         addSubview(statusLabel)
         addSubview(statusTextField)
         addSubview(setStatusButton)
-
+        
         //MARK: Constraints
         let navigationBarHeight = CGFloat(self.safeAreaInsets.top)
         NSLayoutConstraint.activate([
