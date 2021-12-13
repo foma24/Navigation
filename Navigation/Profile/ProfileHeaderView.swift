@@ -98,7 +98,6 @@ class ProfileHeaderView: UIView {
     }
     
     override func layoutSubviews() {
-        
     }
     
     //MARK: Button pressed func
