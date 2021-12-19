@@ -1,61 +1,96 @@
 import UIKit
 
 class ProfileHeaderView: UIView {
-    let titleLabel = UILabel()
+    
+    let fullNameLabel = UILabel()
     let statusLabel = UILabel()
-    let textField = UITextField()
+    let statusTextField = UITextField()
     private var statusText: String = ""
     let image = UIImage(named: "dog")
-    let imageView = UIImageView()
-    let showButton = UIButton(type: .system)
-    
-    func addSubview(){
-        addSubview(titleLabel)
-        addSubview(statusLabel)
-        addSubview(textField)
-        addSubview(imageView)
-        addSubview(showButton)
-    }
-    
+    let avatarImageView = UIImageView()
+    let setStatusButton = UIButton(type: .system)
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        titleLabel.textColor = .black
-        titleLabel.text = "Dog Profile"
-        titleLabel.numberOfLines = 0
+        self.backgroundColor = .lightGray
         
+        //MARK: avatarImageView
+        avatarImageView.image = image
+        avatarImageView.clipsToBounds = true
+        avatarImageView.layer.borderColor = UIColor.white.cgColor
+        avatarImageView.layer.borderWidth = 3
+        avatarImageView.layer.cornerRadius = 75
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        //MARK: fullNameLabel
+        fullNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        fullNameLabel.textColor = .black
+        fullNameLabel.text = "Dog Name"
+        fullNameLabel.numberOfLines = 0
+        fullNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        //MARK: statusLabel
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         statusLabel.textColor = .gray
         statusLabel.text = "Dog Status..."
         statusLabel.numberOfLines = 0
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        textField.textColor = .blue
-        textField.placeholder = "Enter here"
-        textField.backgroundColor = .white
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.layer.cornerRadius = 12
+        //MARK: statusTextField
+        statusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        statusTextField.textColor = .blue
+        statusTextField.placeholder = "Enter here"
+        statusTextField.backgroundColor = .white
+        statusTextField.layer.borderWidth = 1
+        statusTextField.layer.borderColor = UIColor.black.cgColor
+        statusTextField.layer.cornerRadius = 12
+        statusTextField.translatesAutoresizingMaskIntoConstraints = false
         
-        imageView.image = image
-        imageView.clipsToBounds = true
-        imageView.layer.borderColor = UIColor.white.cgColor
-        imageView.layer.borderWidth = 3
-        imageView.layer.cornerRadius = 75
+        //MARK: setStatusButton
+        setStatusButton.layer.cornerRadius = 4
+        setStatusButton.backgroundColor = .blue
+        setStatusButton.setTitle("Show Status", for: .normal)
+        setStatusButton.setTitleColor(.white, for: .normal)
+        setStatusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        setStatusButton.layer.shadowRadius = 4
+        setStatusButton.layer.shadowColor = UIColor.black.cgColor
+        setStatusButton.layer.shadowOpacity = 0.7
+        setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        setStatusButton.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        setStatusButton.translatesAutoresizingMaskIntoConstraints = false
         
-        showButton.layer.cornerRadius = 4
-        showButton.backgroundColor = .blue
-        showButton.setTitle("Show Status", for: .normal)
-        showButton.setTitleColor(.white, for: .normal)
-        showButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-        showButton.layer.shadowRadius = 4
-        showButton.layer.shadowColor = UIColor.black.cgColor
-        showButton.layer.shadowOpacity = 0.7
-        showButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        showButton.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
-        
-        addSubview()
+        //MARK: addSubview
+        addSubview(avatarImageView)
+        addSubview(fullNameLabel)
+        addSubview(statusLabel)
+        addSubview(statusTextField)
+        addSubview(setStatusButton)
+
+        //MARK: Constraints
+        let navigationBarHeight = CGFloat(self.safeAreaInsets.top)
+        NSLayoutConstraint.activate([
+            avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: navigationBarHeight + 16),
+            avatarImageView.heightAnchor.constraint(equalToConstant: self.frame.width / 3),
+            avatarImageView.widthAnchor.constraint(equalToConstant: self.frame.width/3),
+            
+            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27 + navigationBarHeight),
+            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 20),
+            
+            statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
+            statusLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 40),
+            
+            setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -27),
+            setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 27),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            setStatusButton.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 54),
+            
+            statusTextField.leadingAnchor.constraint(equalTo: statusLabel.leadingAnchor),
+            statusTextField.trailingAnchor.constraint(equalTo: setStatusButton.trailingAnchor),
+            statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -5),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+        ])
     }
     
     required init?(coder: NSCoder) {
@@ -63,30 +98,16 @@ class ProfileHeaderView: UIView {
     }
     
     override func layoutSubviews() {
-        super.layoutSubviews()
         
-        titleLabel.sizeToFit()
-        titleLabel.frame = CGRect(x: imageView.frame.width + 54, y: safeAreaInsets.top + 27, width: frame.width, height: titleLabel.frame.height)
-        
-        statusLabel.sizeToFit()
-        statusLabel.frame = CGRect(x: imageView.frame.width + 54, y: titleLabel.frame.height + safeAreaInsets.top + 75, width: frame.width, height: statusLabel.frame.height)
-        
-        textField.sizeToFit()
-        textField.frame = CGRect(x: imageView.frame.width + 54, y: titleLabel.frame.height + safeAreaInsets.top + statusLabel.frame.height + 27 + 75, width: frame.width - 248, height: 40)
-        
-        imageView.frame = CGRect(x: 16, y: safeAreaInsets.top + 16, width: 150, height: 150)
-        
-        showButton.frame = CGRect(x: 16, y: imageView.frame.height + safeAreaInsets.top + 57, width: frame.width - 32, height: 50)
     }
     
+    //MARK: Button pressed func
     @objc func buttonPressed() {
-        //MARK: Задание 1
         print(statusLabel.text ?? "Status button pressed")
-        
-        //MARK: Задание 2
-        statusLabel.text = textField.text
+        statusLabel.text = statusTextField.text
     }
     
+    //MARK: Status changed func
     @objc func statusTextChanged(_ textField: UITextField){
         statusLabel.text = statusText
     }
