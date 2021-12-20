@@ -39,13 +39,9 @@ class FeedViewController: UIViewController {
     }
     
     //MARK: - Buttons tapped
-    @objc func buttonAction(sender: UIButton!) {
+    @objc func buttonAction() {
         let postVC = PostViewController()
         navigationController?.pushViewController(postVC, animated: true)
-        
-        let post = Post(title: "Post")
-        postVC.navigationItem.title = post.title
-        postVC.title = post.title
     }
     
     //MARK: - stackView

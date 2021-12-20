@@ -142,7 +142,7 @@ class LogInViewController: UIViewController {
         ])
     }
     
-    @objc func buttonAction(sender: UIButton!) {
+    @objc func buttonAction() {
         let profileVC = ProfileViewController()
         navigationController?.pushViewController(profileVC, animated: true)
     }
