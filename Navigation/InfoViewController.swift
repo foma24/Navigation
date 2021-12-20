@@ -21,7 +21,7 @@ class InfoViewController: UIViewController {
     }
     
     //MARK: - Alert button tapped
-    @objc func buttonAction(sender: UIButton!) {
+    @objc func buttonAction() {
         let infoAC = UIAlertController(title: "Alert", message: "Tap for message in console", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "Alert", style: .default) { _ in
             print("Alert message")
