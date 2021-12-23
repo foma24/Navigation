@@ -24,3 +24,4 @@ let postArray = [
          likes: 10,
          views: 20)
 ]
+

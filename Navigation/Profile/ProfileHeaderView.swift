@@ -46,7 +46,7 @@ class ProfileHeaderView: UIView {
         imageView.clipsToBounds = true
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 3
-        imageView.layer.cornerRadius = 75
+        imageView.layer.cornerRadius = imageView.frame.height/3
         imageView.toAutoLayout()
         
         return imageView
