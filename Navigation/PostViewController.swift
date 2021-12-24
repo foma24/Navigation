@@ -1,6 +1,6 @@
 import UIKit
 
-class PostViewController: UIViewController, UINavigationBarDelegate {
+class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -8,10 +8,13 @@ class PostViewController: UIViewController, UINavigationBarDelegate {
         //MARK: Background
         view.backgroundColor = .white
         
-        //MARK: Info bar button
+        postBarButton()
+    }
+    
+    //MARK: - Info button
+    func postBarButton(){
         let postBarButtonItem = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(infoButtonTapped))
         self.navigationItem.rightBarButtonItem  = postBarButtonItem
-        
     }
     
     //MARK: - Info button tapped

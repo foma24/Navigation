@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  Navigation
-//
-//  Created by Denis Fomichev on 26.11.2021.
-//
-
 import UIKit
 
 class ViewController: UIViewController {

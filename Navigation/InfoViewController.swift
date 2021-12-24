@@ -8,7 +8,11 @@ class InfoViewController: UIViewController {
         //MARK: Background
         view.backgroundColor = .gray
         
-        //MARK: Alert button
+        alertButtonFunc()
+    }
+    
+    //MARK: - Alert button
+    func alertButtonFunc(){
         let alertButton = UIButton(frame: CGRect(x: 100, y: 100, width: 50, height: 50))
         alertButton.backgroundColor = .red
         alertButton.setTitle("Alert", for: .normal)

@@ -9,19 +9,13 @@ class ProfileHeaderView: UIView {
     let image = UIImage(named: "dog")
     let avatarImageView = UIImageView()
     let setStatusButton = UIButton(type: .system)
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.backgroundColor = .lightGray
         
-        //MARK: avatarImageView
-        avatarImageView.image = image
-        avatarImageView.clipsToBounds = true
-        avatarImageView.layer.borderColor = UIColor.white.cgColor
-        avatarImageView.layer.borderWidth = 3
-        avatarImageView.layer.cornerRadius = 75
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        avatarImage()
         
         //MARK: fullNameLabel
         fullNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -61,19 +55,14 @@ class ProfileHeaderView: UIView {
         setStatusButton.translatesAutoresizingMaskIntoConstraints = false
         
         //MARK: addSubview
-        addSubview(avatarImageView)
         addSubview(fullNameLabel)
         addSubview(statusLabel)
         addSubview(statusTextField)
         addSubview(setStatusButton)
-
+        
         //MARK: Constraints
         let navigationBarHeight = CGFloat(self.safeAreaInsets.top)
         NSLayoutConstraint.activate([
-            avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: navigationBarHeight + 16),
-            avatarImageView.heightAnchor.constraint(equalToConstant: self.frame.width / 3),
-            avatarImageView.widthAnchor.constraint(equalToConstant: self.frame.width/3),
             
             fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27 + navigationBarHeight),
             fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 20),
@@ -93,6 +82,26 @@ class ProfileHeaderView: UIView {
         ])
     }
     
+    //MARK: - avatarImageView
+    func avatarImage(){
+        avatarImageView.image = image
+        avatarImageView.clipsToBounds = true
+        avatarImageView.layer.borderColor = UIColor.white.cgColor
+        avatarImageView.layer.borderWidth = 3
+        avatarImageView.layer.cornerRadius = 75
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(avatarImageView)
+        
+        //MARK: Constraints
+        let navigationBarHeight = CGFloat(self.safeAreaInsets.top)
+        NSLayoutConstraint.activate([
+            avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: navigationBarHeight + 16),
+            avatarImageView.heightAnchor.constraint(equalToConstant: self.frame.width / 3),
+            avatarImageView.widthAnchor.constraint(equalToConstant: self.frame.width/3),
+        ])
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -101,13 +110,13 @@ class ProfileHeaderView: UIView {
         
     }
     
-    //MARK: Button pressed func
+    //MARK: buttonPressed func
     @objc func buttonPressed() {
         print(statusLabel.text ?? "Status button pressed")
         statusLabel.text = statusTextField.text
     }
     
-    //MARK: Status changed func
+    //MARK: - statusTextChanged func
     @objc func statusTextChanged(_ textField: UITextField){
         statusLabel.text = statusText
     }

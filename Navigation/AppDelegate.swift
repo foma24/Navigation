@@ -9,7 +9,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         
-        //MARK: Feed VC
+        //MARK: feedVC
         let feedBarItem = UITabBarItem()
         feedBarItem.title = "Feed"
         feedBarItem.image = UIImage(systemName: "doc.plaintext")
@@ -20,21 +20,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let feedNavigationController = UINavigationController(rootViewController: feedVC)
         feedVC.tabBarItem = feedBarItem
         
-        //MARK: Profile VC
+        //MARK: profileVC
         let profileBarItem = UITabBarItem()
         profileBarItem.title = "Profile"
         profileBarItem.image = UIImage(systemName: "folder")
         profileBarItem.selectedImage = UIImage(systemName: "folder.fill")
         let profileVC = ProfileViewController()
-        profileVC.view.backgroundColor = .white
         profileVC.title = "Profile"
-        let profileNavigationController = UINavigationController(rootViewController: profileVC)
-        profileVC.tabBarItem = profileBarItem
+        
+        //MARK: loginVC
+        let loginVC = LogInViewController()
+        loginVC.view.backgroundColor = .white
+        let loginNavigationController = UINavigationController(rootViewController: loginVC)
+        loginVC.tabBarItem = profileBarItem
         
         //MARK: Tab Bar
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
-        tabBarController.viewControllers = [feedNavigationController, profileNavigationController]
+        tabBarController.viewControllers = [feedNavigationController, loginNavigationController]
         tabBarController.selectedIndex = 0
         
         window?.rootViewController = tabBarController
