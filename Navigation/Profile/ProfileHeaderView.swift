@@ -1,6 +1,9 @@
 import UIKit
 
-class ProfileHeaderView: UIView {
+class ProfileHeaderView: UITableViewHeaderFooterView {
+    
+    static let identifier = "ProfileHeaderView"
+    
     let fullNameLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -46,7 +49,7 @@ class ProfileHeaderView: UIView {
         imageView.clipsToBounds = true
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 3
-        imageView.layer.cornerRadius = imageView.frame.height/3
+        imageView.layer.cornerRadius = 50
         imageView.toAutoLayout()
         
         return imageView
@@ -69,10 +72,8 @@ class ProfileHeaderView: UIView {
         return statusButton
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.backgroundColor = .lightGray
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         
         setSubviews()
         
@@ -81,7 +82,17 @@ class ProfileHeaderView: UIView {
         statusLabelConstraints()
         statusButtonConstraints()
         statusTextFieldConstraints()
+        
     }
+    
+    override func draw(_ rect: CGRect) {
+        let view = UIView()
+        view.frame = rect
+        self.backgroundView = view
+        self.backgroundView?.backgroundColor = UIColor.lightGray
+    }
+    
+    
     
     //MARK: - addSubview
     func setSubviews() {
@@ -97,7 +108,7 @@ class ProfileHeaderView: UIView {
         NSLayoutConstraint.activate([
             avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant:  16),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
+            avatarImageView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor),
             avatarImageView.widthAnchor.constraint(equalToConstant: 100),
         ])
     }
