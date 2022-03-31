@@ -1,4 +1,5 @@
 import UIKit
+import StorageService
 
 class PostTableViewCell: UITableViewCell {
     
@@ -53,7 +54,7 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-    var post: Post? {
+    public var post: Post? {
         didSet {
             postAuthor.text = post?.author
             postImageView.image = UIImage(named: post!.image)
