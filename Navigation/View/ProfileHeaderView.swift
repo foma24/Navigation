@@ -1,4 +1,5 @@
 import UIKit
+import SnapKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
@@ -65,8 +66,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         statusButton.layer.shadowRadius = 4
         statusButton.layer.shadowColor = UIColor.black.cgColor
         statusButton.layer.shadowOpacity = 0.7
-        statusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        statusButton.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        statusButton.addTarget(ProfileHeaderView.self, action: #selector(buttonPressed), for: .touchUpInside)
+        statusButton.addTarget(ProfileHeaderView.self, action: #selector(statusTextChanged), for: .editingChanged)
         statusButton.translatesAutoresizingMaskIntoConstraints = false
         
         return statusButton
@@ -105,49 +106,81 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     //MARK: - avatarImageView
     func avatarImageConstraints() {
-        NSLayoutConstraint.activate([
-            avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant:  16),
-            avatarImageView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
-        ])
+        avatarImageView.snp.makeConstraints { make in
+            make.leading.top.equalTo(16)
+            make.height.equalTo(avatarImageView.snp.width)
+            make.width.equalTo(100)
+            
+        }
+        
+//        NSLayoutConstraint.activate([
+//            avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+//            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant:  16),
+//            avatarImageView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor),
+//            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
+//        ])
     }
     
     //MARK: - fullNameLabel
     func fullNameLabelConstraints() {
-        let navigationBarHeight = CGFloat(self.safeAreaInsets.top)
-        NSLayoutConstraint.activate([
-            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27 + navigationBarHeight),
-            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 20),
-        ])
+        
+        fullNameLabel.snp.makeConstraints { make in
+            make.left.equalTo(avatarImageView.snp.right).offset(20)
+            make.top.equalTo(self.snp.top).offset(20)
+        }
+//
+//        let navigationBarHeight = CGFloat(self.safeAreaInsets.top)
+//        NSLayoutConstraint.activate([
+//            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27 + navigationBarHeight),
+//            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 20),
+//        ])
     }
     
     //MARK: - statusLabel
     func statusLabelConstraints(){
-        NSLayoutConstraint.activate([
-            statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
-            statusLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 40),
-        ])
+        statusLabel.snp.makeConstraints { make in
+            make.leading.equalTo(fullNameLabel.snp.leading)
+            make.top.equalTo(fullNameLabel.snp.bottom).offset(40)
+        }
+        
+//        NSLayoutConstraint.activate([
+//            statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
+//            statusLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 40),
+//        ])
     }
     
     //MARK: - setStatusButton
     func statusButtonConstraints(){
-        NSLayoutConstraint.activate([
-            setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -27),
-            setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 27),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-            setStatusButton.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 54),
-        ])
+        setStatusButton.snp.makeConstraints { make in
+            make.trailing.equalTo(-27)
+            make.leading.equalTo(27)
+            make.height.equalTo(50)
+            make.top.equalTo(statusLabel.snp.bottom).offset(54)
+        }
+        
+//        NSLayoutConstraint.activate([
+//            setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -27),
+//            setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 27),
+//            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+//            setStatusButton.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 54),
+//        ])
     }
     
     //MARK: - statusTextField
     func statusTextFieldConstraints(){
-        NSLayoutConstraint.activate([
-            statusTextField.leadingAnchor.constraint(equalTo: statusLabel.leadingAnchor),
-            statusTextField.trailingAnchor.constraint(equalTo: setStatusButton.trailingAnchor),
-            statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -5),
-            statusTextField.heightAnchor.constraint(equalToConstant: 40),
-        ])
+        statusTextField.snp.makeConstraints { make in
+            make.leading.equalTo(statusLabel.snp.leading)
+            make.trailing.equalTo(setStatusButton.snp.trailing)
+            make.bottom.equalTo(setStatusButton.snp.top).offset(-5)
+            make.height.equalTo(40)
+        }
+//
+//        NSLayoutConstraint.activate([
+//            statusTextField.leadingAnchor.constraint(equalTo: statusLabel.leadingAnchor),
+//            statusTextField.trailingAnchor.constraint(equalTo: setStatusButton.trailingAnchor),
+//            statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -5),
+//            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+//        ])
     }
     
     required init?(coder: NSCoder) {
