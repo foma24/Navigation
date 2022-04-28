@@ -1,36 +1,24 @@
 import Foundation
 
 public struct Post {
-    public let author:String
-    public let description: String
-    public let image: String
-    public let likes: Int
-    public let views: Int
+    public var title: String
+    public var description: String
+    public var image: String
+    public var likes: Int
+    public var views: Int
 }
 
+public let post1 = Post(title: "Post1",
+                 description: "Desription1",
+                 image: "chip", likes: 0, views: 0)
+public let post2 = Post(title: "Post2",
+                 description: "Desription2",
+                 image: "duck", likes: 0, views: 0)
+public let post3 = Post(title: "Post3",
+                 description: "Desription3",
+                 image: "ghostbusters", likes: 0, views: 0)
+public let post4 = Post(title: "Post4",
+                 description: "Desription5",
+                 image: "mario", likes: 0, views: 0)
 
-public let postArray = [
-    Post(author: "Mario",
-         description: "New Super Mario Bros",
-         image: "mario",
-         likes: 50,
-         views: 50),
-    
-    Post(author: "GhostBusters",
-         description: "GhostBusters videogame",
-         image: "ghostbusters",
-         likes: 100,
-         views: 150),
-    
-    Post(author: "Chip",
-         description: "Chip'n'Dale Rescue",
-         image: "chip", likes: 200,
-         views: 250),
-    
-    Post(author: "Darkwing Duck",
-         description: "Darkwing Duck videogame",
-         image: "duck",
-         likes: 10,
-         views: 20)
-]
-
+public var postArray: [Post] = [post1, post2, post3, post4]

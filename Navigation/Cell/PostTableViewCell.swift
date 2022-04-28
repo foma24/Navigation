@@ -1,125 +1,123 @@
 import UIKit
-import StorageService
 import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
     
-    static let identifier = "PostTableViewCell"
+    static let identifire = "PostTableViewCell"
     
-    let postAuthor: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
-        label.numberOfLines = 2
-        label.textAlignment = .left
-        label.toAutoLayout()
+    private lazy var postTitle: UILabel = {
+        let postTitle = UILabel()
+        postTitle.toAutoLayout()
+        postTitle.numberOfLines = 2
+        postTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         
-        return label
+        return postTitle
     }()
     
-    let postImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .black
-        imageView.toAutoLayout()
+    private lazy var postImage: UIImageView = {
+        let postImage = UIImageView()
+        postImage.toAutoLayout()
+        postImage.backgroundColor = .black
+        postImage.contentMode = .scaleAspectFit
         
-        return imageView
+        return postImage
     }()
     
-    let postDescription: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .systemGray
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.toAutoLayout()
+    private lazy var postDescription: UILabel = {
+        let postDescription = UILabel()
+        postDescription.toAutoLayout()
+        postDescription.font = UIFont.systemFont(ofSize: 14)
+        postDescription.textColor = .systemGray
+        postDescription.numberOfLines = 0
         
-        return label
+        return postDescription
     }()
     
-    let postLikes: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
-        label.toAutoLayout()
+    private lazy var postLikes: UILabel = {
+        let postLikes = UILabel()
+        postLikes.toAutoLayout()
+        postLikes.font = UIFont.systemFont(ofSize: 16)
+        postLikes.textColor = .black
         
-        return label
+        return postLikes
     }()
     
-    let postViews: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
-        label.toAutoLayout()
+    private lazy var postViews: UILabel = {
+        let postViews = UILabel()
+        postViews.toAutoLayout()
+        postLikes.font = UIFont.systemFont(ofSize: 16)
+        postLikes.textColor = .black
         
-        return label
+        return postViews
     }()
     
-    public var post: Post? {
-        didSet {
-            postAuthor.text = post?.author
-            postImageView.image = UIImage(named: post!.image)
-            postDescription.text = post?.description
-            postLikes.text = "Likes: \(post?.likes ?? 0)"
-            postViews.text = "Views: \(post?.views ?? 0)"
-            
-            //MARK: photo filters
-            let random = Int.random(in: 1...8)
-            let filter: ColorFilter?
-            
-            switch random {
-            case 1: filter = .fade
-            case 2: filter = .colorInvert
-            case 3: filter = .noir
-            case 4: filter = .chrome
-            default: filter = nil
-            }
-            
-            let imageProcessor = ImageProcessor()
-            guard let filter = filter else { return }
-            guard let image = postImageView.image else { return }
-            
-            imageProcessor.processImage(sourceImage: image, filter: filter) { filteredImage in
-                postImageView.image = filteredImage
-            }
-            
-            print("Post \(String(describing: postAuthor.text)) filter \(filter)")
-        }
-    }
-    
-    override var reuseIdentifier: String?{
-        return "PostTableViewCell"
-    }
-    
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .white
         
-        setupViews()
-        cellConstraints()
+        contentView.addSubviews(postTitle, postImage, postDescription, postLikes, postViews)
+        self.selectionStyle = .none
+        
+        setupConstraints()
     }
     
-    //MARK: - setupViews
-    func setupViews() {
-        contentView.addSubview(postAuthor)
-        contentView.addSubview(postImageView)
-        contentView.addSubview(postDescription)
-        contentView.addSubview(postLikes)
-        contentView.addSubview(postViews)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - cellConstraints
-    func cellConstraints() {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+    
+    //MARK: - Cell config
+    public func configCell(author: String, image: String, description: String, likes: Int, views: Int) {
+        self.postTitle.text = author
+        self.postImage.image = UIImage(named: image)
+        
+        // применяем фильтр к изображению
+        let randomInt = Int.random(in: 1...8)
+        let filter: ColorFilter?
+        
+        switch randomInt {
+            case 1: filter = .posterize
+            case 2: filter = .colorInvert
+            case 3: filter = .transfer
+            case 4: filter = .noir
+            case 5: filter = .tonal
+            case 6: filter = .process
+            case 7: filter = .chrome
+            case 8: filter = .fade
+            default: filter = nil
+        }
+        
+        let processor = ImageProcessor()
+        guard let filter = filter else { return }
+        guard let image = postImage.image else { return }
+        
+        processor.processImage(sourceImage: image, filter: filter) { filteredImage in
+            postImage.image = filteredImage
+        }
+        
+        self.postDescription.text = description
+        self.postLikes.text = "Likes: \(likes)"
+        self.postViews.text = "Views: \(views)"
+    }
+    
+    //MARK: - Setup constraints
+    private func setupConstraints(){
         NSLayoutConstraint.activate([
-            postAuthor.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            postAuthor.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            postAuthor.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             
-            postImageView.topAnchor.constraint(equalTo: postAuthor.bottomAnchor, constant: 16),
-            postImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            postImageView.heightAnchor.constraint(equalTo: contentView.widthAnchor),
+            contentView.widthAnchor.constraint(equalTo: self.widthAnchor),
             
-            postDescription.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 16),
+            postTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            postTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            postTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
+            postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            postImage.heightAnchor.constraint(equalTo: postImage.widthAnchor),
+            postImage.topAnchor.constraint(equalTo: postTitle.bottomAnchor, constant: 16),
+            
+            postDescription.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: 16),
             postDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             postDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
@@ -128,18 +126,8 @@ class PostTableViewCell: UITableViewCell {
             postLikes.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             
             postViews.topAnchor.constraint(equalTo: postDescription.bottomAnchor, constant: 16),
-            postViews.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+            postViews.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            postViews.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+        ])
     }
 }

@@ -2,24 +2,22 @@ import UIKit
 
 class PostViewController: UIViewController {
     
+    var postTitle: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //MARK: Background
         view.backgroundColor = .white
         
-        postBarButton()
+        self.title = postTitle
+        
+        let infoBarItem: UIBarButtonItem = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(infoTapped))
+        
+        navigationItem.rightBarButtonItem = infoBarItem
     }
     
-    //MARK: - Info button
-    func postBarButton(){
-        let postBarButtonItem = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(infoButtonTapped))
-        self.navigationItem.rightBarButtonItem  = postBarButtonItem
-    }
-    
-    //MARK: - Info button tapped
-    @objc func infoButtonTapped() {
+    @objc func infoTapped() {
         let infoVC = InfoViewController()
-        present(infoVC, animated: true, completion: nil)
+        navigationController?.present(infoVC, animated: true)
     }
 }
