@@ -58,7 +58,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         let setStatusButton = UIButton()
         setStatusButton.toAutoLayout()
         setStatusButton.backgroundColor = .blue
-        setStatusButton.layer.cornerRadius = 4
+        setStatusButton.layer.cornerRadius = 12
         setStatusButton.setTitle("Set status", for: .normal)
         setStatusButton.setTitleColor(.lightGray, for: .highlighted)
         setStatusButton.addTarget(self, action: #selector(setStatus), for: .touchUpInside)

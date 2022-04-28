@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileBarItem.title = "Profile"
         profileBarItem.image = UIImage(systemName: "folder")
         profileBarItem.selectedImage = UIImage(systemName: "folder.fill")
-        let profileVC = ProfileViewController()
-        profileVC.title = "Profile"
+//        let profileVC = ProfileViewController()
+//        profileVC.title = "Profile"
         
         //MARK: loginVC
         let loginVC = LogInViewController()

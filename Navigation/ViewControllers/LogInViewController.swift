@@ -192,7 +192,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Login button pressed
     @objc private func loginButtonPressed() {
-        isLogin = true
+        //isLogin = true
         if let image = UIImage(named: "blue_pixel") {
             loginButton.setBackgroundImage(image.image(alpha: 0.8), for: .normal)
             DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
@@ -200,8 +200,36 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        let profileVC = ProfileViewController()
-        navigationController?.pushViewController(profileVC, animated: false)
+        #if DEBUG
+        let currentUserService = TestUserService()
+        let profileVC = ProfileViewController(userService: currentUserService, login: loginTextField.text!)
+        profileVC.userService = currentUserService
+        if loginTextField.text == currentUserService.user.login{
+            isLogin = true
+            navigationController?.pushViewController(profileVC, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "No user!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        #else
+        let currentUserService = CurrentUserService()
+        let profileVC = ProfileViewController(userService: currentUserService, login: loginTextField.text!)
+        profileVC.userService = currentUserService
+        if loginTextField.text == currentUserService.user.login{
+            isLogin = true
+            navigationController?.pushViewController(profileVC, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "No user!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        #endif
         
         if isLogin {
             navigationController?.setViewControllers([profileVC], animated: true)
