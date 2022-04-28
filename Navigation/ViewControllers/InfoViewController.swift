@@ -2,33 +2,40 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
+    var alertButton = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //MARK: Background
-        view.backgroundColor = .gray
+        view.backgroundColor = .lightGray
         
-        alertButtonFunc()
+        alertButtonConfig() 
     }
     
-    //MARK: - Alert button
-    func alertButtonFunc(){
-        let alertButton = UIButton(frame: CGRect(x: 100, y: 100, width: 50, height: 50))
+    //MARK: - alert button config
+    func alertButtonConfig() {
+        alertButton = UIButton(frame: CGRect(x: view.frame.width/2-100, y: view.frame.height/2-25, width: 200, height: 50))
+        alertButton.layer.cornerRadius = 12
         alertButton.backgroundColor = .red
         alertButton.setTitle("Alert", for: .normal)
-        alertButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        self.view.addSubview(alertButton)
+        
+        alertButton.addTarget(self, action: #selector(alertButtonTapped), for: .touchUpInside)
+        
+        view.addSubview(alertButton)
     }
     
-    //MARK: - Alert button tapped
-    @objc func buttonAction() {
-        let infoAC = UIAlertController(title: "Alert", message: "Tap for message in console", preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Alert", style: .default) { _ in
-            print("Alert message")
+    //MARK: - alertButtonTapped
+    @objc func alertButtonTapped() {
+        let alert = UIAlertController(title: "AlertTitle", message: "AlertMessage", preferredStyle: .alert)
+        let firstAlertAction = UIAlertAction(title: "FirstAlertAction", style: .default) { _ in
+            print("First Alert Action")
         }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        infoAC.addAction(alertAction)
-        infoAC.addAction(cancel)
-        self.present(infoAC, animated: true, completion: nil)
+        let secondAlertAction = UIAlertAction(title: "SecondAlertAction", style: .default) { _ in
+            print("Second Alert Action")
+        }
+        alert.addAction(firstAlertAction)
+        alert.addAction(secondAlertAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }

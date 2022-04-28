@@ -1,8 +1,7 @@
-import Foundation
 import UIKit
 
-let photosArray: [UIImage] = [
-    UIImage(named: "photo")!,
+var photosArray:[UIImage] = [
+    UIImage(named: "photo1")!,
     UIImage(named: "photo2")!,
     UIImage(named: "photo3")!,
     UIImage(named: "photo4")!,
@@ -12,12 +11,14 @@ let photosArray: [UIImage] = [
     UIImage(named: "photo8")!,
     UIImage(named: "photo9")!,
     UIImage(named: "photo10")!,
+    UIImage(named: "photo11")!,
     UIImage(named: "photo12")!,
     UIImage(named: "photo13")!,
     UIImage(named: "photo14")!,
     UIImage(named: "photo15")!,
     UIImage(named: "photo16")!,
     UIImage(named: "photo17")!,
-    UIImage(named: "photo18")!,
-    UIImage(named: "photo19")!
+    UIImage(named: "photo18")!
 ]
+
+

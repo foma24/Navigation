@@ -1,32 +1,41 @@
 import UIKit
 
-class PhotosTableViewCell: UITableViewCell {
+class PhotoTableViewCell: UITableViewCell {
     
-    static let identifier = "PhotosTableViewCell"
-    
-    let photosTitle: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label.text = "Photos"
-        label.textColor = .black
-        label.toAutoLayout()
+    static let identifire = "PhotosTableViewCell"
+
+    private lazy var photosLabel: UILabel = {
+        let photosLabel = UILabel()
+        photosLabel.text = "My Photos"
+        photosLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        photosLabel.textColor = .black
+        photosLabel.toAutoLayout()
         
-        return label
+        return photosLabel
+    }()
+
+    static var arrowButton: UIButton = {
+        let arrowButton = UIButton()
+        arrowButton.setImage(UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
+        arrowButton.setImage(UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))?.withTintColor(.gray, renderingMode: .alwaysOriginal), for: .highlighted)
+        arrowButton.toAutoLayout()
+        
+        return arrowButton
     }()
     
-    let photosStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.distribution = .fillEqually
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 8
-        stackView.toAutoLayout()
+    private lazy var previewStackView: UIStackView = {
+        let previewStackView = UIStackView()
+        previewStackView.toAutoLayout()
+        previewStackView.axis = .horizontal
+        previewStackView.distribution = .fillEqually
+        previewStackView.alignment = .center
+        previewStackView.spacing = 8
         
-        return stackView
+        return previewStackView
     }()
     
-    let imageView1: UIImageView = {
-        let image = UIImage(named: "photo")
+    private lazy var previewImage1:UIImageView = {
+        let image = UIImage(named: "photo1")
         let imageView = UIImageView()
         imageView.image = image
         imageView.layer.cornerRadius = 6
@@ -36,7 +45,7 @@ class PhotosTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let imageView2: UIImageView = {
+    private lazy var previewImage2:UIImageView = {
         let image = UIImage(named: "photo2")
         let imageView = UIImageView()
         imageView.image = image
@@ -47,7 +56,7 @@ class PhotosTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let imageView3: UIImageView = {
+    private lazy var previewImage3:UIImageView = {
         let image = UIImage(named: "photo3")
         let imageView = UIImageView()
         imageView.image = image
@@ -58,7 +67,7 @@ class PhotosTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let imageView4: UIImageView = {
+    private lazy var previewImage4:UIImageView = {
         let image = UIImage(named: "photo4")
         let imageView = UIImageView()
         imageView.image = image
@@ -69,88 +78,52 @@ class PhotosTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let photosButton: UIButton = {
-        let image = UIImage(systemName: "arrow.right")
-        let button = UIButton()
-        button.setBackgroundImage(image, for: .normal)
-        button.tintColor = .black
-        button.clipsToBounds = true
-        button.toAutoLayout()
-        
-        return button
-    }()
-    
-    struct Constants {
-        static let sideConst:CGFloat = 12
-        static let intervalConst: CGFloat = 8
-    }
-    
-    //MARK: - reuseIdentifier
-    override var reuseIdentifier: String?{
-        return "PhotosTableViewCell"
-    }
-    
-    //MARK: - init
+    //MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .white
-        
-        setSubviews()
-        setStackView()
-        setPhotoTitle()
-        setPhotosButton() 
-    }
-    
-    //MARK: - setSubviews
-    func setSubviews(){
-        contentView.addSubview(photosTitle)
-        contentView.addSubview(photosStackView)
-        contentView.addSubview(photosButton)
-    }
-    
-    //MARK: - setStackView
-    func setPhotoTitle(){
-        NSLayoutConstraint.activate([
-            photosTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.sideConst),
-            photosTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.sideConst),
-        ])
-    }
-    
-    //MARK: - setPhotosButton
-    func setPhotosButton() {
-        NSLayoutConstraint.activate([
-            photosButton.centerYAnchor.constraint(equalTo: photosTitle.centerYAnchor),
-            photosButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.sideConst),
-            photosButton.widthAnchor.constraint(equalToConstant: 30),
-            photosButton.heightAnchor.constraint(equalTo: photosButton.widthAnchor)
-        ])
-    }
-    
-    //MARK: - setStackView
-    func setStackView(){
-        photosStackView.addArrangedSubview(imageView1)
-        photosStackView.addArrangedSubview(imageView2)
-        photosStackView.addArrangedSubview(imageView3)
-        photosStackView.addArrangedSubview(imageView4)
-        
-        NSLayoutConstraint.activate([
-            photosStackView.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: Constants.sideConst),
-            photosStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.sideConst),
-            photosStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.sideConst),
-            photosStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.sideConst),
-            photosStackView.heightAnchor.constraint(equalToConstant: (contentView.frame.size.width - Constants.sideConst * 2 - Constants.intervalConst * 3) / 4),
-        ])
+        self.selectionStyle = .none
+        contentView.addSubviews(photosLabel, PhotoTableViewCell.arrowButton, previewStackView)
+        previewStackView.addArrangedSubviews(previewImage1, previewImage2, previewImage3, previewImage4)
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    //MARK: - Setup constraints
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            
+            photosLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            photosLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            
+            PhotoTableViewCell.arrowButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            PhotoTableViewCell.arrowButton.centerYAnchor.constraint(equalTo: photosLabel.centerYAnchor),
+            PhotoTableViewCell.arrowButton.heightAnchor.constraint(equalToConstant: 40),
+            PhotoTableViewCell.arrowButton.widthAnchor.constraint(equalToConstant: 40),
+            
+            previewStackView.topAnchor.constraint(equalTo: photosLabel.bottomAnchor, constant: 12),
+            previewStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            previewStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            previewStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            
+            previewImage1.widthAnchor.constraint(greaterThanOrEqualToConstant: (contentView.frame.width - 16) / 4),
+            previewImage1.heightAnchor.constraint(equalTo: previewImage1.widthAnchor),
+            
+            previewImage2.widthAnchor.constraint(greaterThanOrEqualToConstant: (contentView.frame.width - 16) / 4),
+            previewImage2.heightAnchor.constraint(equalTo: previewImage2.widthAnchor),
+            
+            previewImage3.widthAnchor.constraint(greaterThanOrEqualToConstant: (contentView.frame.width - 16) / 4),
+            previewImage3.heightAnchor.constraint(equalTo: previewImage2.widthAnchor),
+            
+            previewImage4.widthAnchor.constraint(greaterThanOrEqualToConstant: (contentView.frame.width - 16) / 4),
+            previewImage4.heightAnchor.constraint(equalTo: previewImage2.widthAnchor),
+            
+        ])
     }
 }

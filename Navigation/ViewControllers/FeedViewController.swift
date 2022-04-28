@@ -2,61 +2,62 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    let firshButton = UIButton(type: .system)
-    let secondButton = UIButton(type: .system)
-    let stackView = UIStackView()
+    lazy private var firstButton: UIButton = {
+        var firstButton = UIButton()
+        firstButton.toAutoLayout()
+        firstButton.backgroundColor = .blue
+        firstButton.setTitle("First Button", for: .normal)
+        firstButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        
+        return firstButton
+    }()
     
+    lazy private var secondButton: UIButton = {
+        var secondButton = UIButton()
+        secondButton.toAutoLayout()
+        secondButton.backgroundColor = .red
+        secondButton.setTitle("Second Button", for: .normal)
+        secondButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        
+        return secondButton
+    }()
+    
+    lazy private var stackView: UIStackView = {
+        var stackView = UIStackView()
+        stackView.toAutoLayout()
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        
+        return stackView
+    }()
+    
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //MARK: Background
+        self.title = "Feed"
+        self.view.addSubview(stackView)
+        stackView.addArrangedSubview(firstButton)
+        stackView.addArrangedSubview(secondButton)
+        stackView.spacing = 24
+        stackView.distribution = .fillEqually
         view.backgroundColor = .white
-        
-        firstButtonFunc()
-        secondButtonFunc()
-        
-        stackFunc()
+        setupConstraints()
     }
     
-    //MARK: - firshButton
-    func firstButtonFunc() {
-        firshButton.setTitle("Button ONE", for: .normal)
-        firshButton.setTitleColor(.white, for: .normal)
-        firshButton.backgroundColor = .red
-        firshButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(firshButton)
-        firshButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+    //MARK: - setup constraints
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            stackView.widthAnchor.constraint(equalToConstant: self.view.bounds.width/2),
+            stackView.heightAnchor.constraint(equalToConstant: self.view.bounds.height/4),
+        ])
     }
     
-    //MARK: - secondButton
-    func secondButtonFunc(){
-        secondButton.setTitle("Button TWO", for: .normal)
-        secondButton.setTitleColor(.white, for: .normal)
-        secondButton.backgroundColor = .blue
-        secondButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(secondButton)
-        secondButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-    }
-    
-    //MARK: - Buttons tapped
-    @objc func buttonAction() {
+    //MARK: - button tapped
+    @objc private func buttonTapped() {
         let postVC = PostViewController()
         navigationController?.pushViewController(postVC, animated: true)
-    }
-    
-    //MARK: - stackView
-    func stackFunc(){
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        stackView.addArrangedSubview(firshButton)
-        stackView.addArrangedSubview(secondButton)
-        view.addSubview(stackView)
-        
-        //MARK: Constraints
-        NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
     }
 }
