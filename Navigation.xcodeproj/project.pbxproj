@@ -148,8 +148,6 @@
 				7C8FADE0275186B3009FB054 /* Post.swift */,
 				7CF845AA27763F2300983EAB /* PhotosData.swift */,
 				7C5EC5D6281AED58002EE9C0 /* User.swift */,
-				7C5EC5D8281AEEAB002EE9C0 /* CurrentUserService.swift */,
-				7C5EC5DA281AF525002EE9C0 /* TestUserService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -160,6 +158,15 @@
 				7CAE2E02276FDA11003922D9 /* UIView_extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		7C2BA5BC2821AE4500499265 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7C5EC5D8281AEEAB002EE9C0 /* CurrentUserService.swift */,
+				7C5EC5DA281AF525002EE9C0 /* TestUserService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		7C8FADB42751704C009FB054 = {
@@ -190,6 +197,7 @@
 				7CC615CF27FCDB34003FB3ED /* View */,
 				7CC615CE27FCDB1D003FB3ED /* Cell */,
 				7C18976B2773A2FA00CB66DD /* Model */,
+				7C2BA5BC2821AE4500499265 /* Services */,
 				7C18976C2773A31500CB66DD /* Extension */,
 				7C8FADC92751704E009FB054 /* Assets.xcassets */,
 				7C8FADCB2751704E009FB054 /* LaunchScreen.storyboard */,
