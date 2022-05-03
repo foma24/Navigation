@@ -34,6 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginNavigationController = UINavigationController(rootViewController: loginVC)
         loginVC.tabBarItem = profileBarItem
         
+        let factory = LoginFactory()
+        let inspector = factory.createLoginInspector()
+        loginVC.delegate = inspector
+        
         //MARK: Tab Bar
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white

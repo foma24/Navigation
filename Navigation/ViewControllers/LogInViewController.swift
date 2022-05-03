@@ -3,6 +3,7 @@ import UIKit
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
     var isLogin: Bool = false
+    var delegate: LoginViewControllerDelegate?
     
     private lazy var loginScrollView: UIScrollView = {
         let loginScrollView = UIScrollView()
@@ -200,39 +201,35 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        #if DEBUG
-        let currentUserService = TestUserService()
-        let profileVC = ProfileViewController(userService: currentUserService, login: loginTextField.text!)
-        profileVC.userService = currentUserService
-        if loginTextField.text == currentUserService.user.login{
-            isLogin = true
-            navigationController?.pushViewController(profileVC, animated: true)
-        } else {
-            let alert = UIAlertController(title: "Error", message: "No user!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-            NSLog("The \"OK\" alert occured.")
-            }))
-            self.present(alert, animated: true, completion: nil)
-        }
-        
-        #else
-        let currentUserService = CurrentUserService()
-        let profileVC = ProfileViewController(userService: currentUserService, login: loginTextField.text!)
-        profileVC.userService = currentUserService
-        if loginTextField.text == currentUserService.user.login{
-            isLogin = true
-            navigationController?.pushViewController(profileVC, animated: true)
-        } else {
-            let alert = UIAlertController(title: "Error", message: "No user!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-            NSLog("The \"OK\" alert occured.")
-            }))
-            self.present(alert, animated: true, completion: nil)
-        }
-        #endif
-        
-        if isLogin {
-            navigationController?.setViewControllers([profileVC], animated: true)
-        }
+          guard loginTextField.text?.isEmpty == false else {
+              let alertVC = UIAlertController(title: "Error", message: "Login is empty", preferredStyle: .alert)
+              let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+              alertVC.addAction(action)
+              self.present(alertVC, animated: true, completion: nil)
+              return }
+          
+          guard passwordTextField.text?.isEmpty == false else {
+              let alertVC = UIAlertController(title: "Error", message: "Password is empty", preferredStyle: .alert)
+              let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+              alertVC.addAction(action)
+              self.present(alertVC, animated: true, completion: nil)
+              return }
+
+          guard let login = loginTextField.text else { return }
+          guard let password = passwordTextField.text else { return }
+          guard let delegate = delegate else { return }
+          let result = delegate.check(login: login, password: password)
+
+          if result {
+              isLogin = true
+              let profileVC = ProfileViewController()
+              navigationController?.pushViewController(profileVC, animated: false)
+          } else {
+              isLogin = false
+              let alertVC = UIAlertController(title: "Error", message: "Wrong user", preferredStyle: .alert)
+              let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+              alertVC.addAction(action)
+              self.present(alertVC, animated: true, completion: nil)
+          }
     }
 }

@@ -2,20 +2,9 @@ import UIKit
 import StorageService
 
 class ProfileViewController: UIViewController {
-    
-    var userService: UserService
+
     var login: String?
-    
-    init(userService: UserService, login: String){
-        self.userService = userService
-        self.login = login
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     static var tableView: UITableView = {
         let postTableView = UITableView(frame: .zero, style: .grouped)
         postTableView.toAutoLayout()
@@ -122,11 +111,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
-            
-            let currentUser = userService.getUser(login: login!)
-            headerView.fullNameLabel.text = currentUser?.fullName
-            headerView.avatarImageView.image = currentUser?.avatar
-            headerView.statusLabel.text = currentUser?.status
             
             return headerView
             
