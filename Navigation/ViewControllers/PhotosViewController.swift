@@ -1,6 +1,9 @@
 import UIKit
+import iOSIntPackage
 
 class PhotoViewController: UIViewController {
+    
+    let facade = ImagePublisherFacade()
     
     private lazy var photosCollection: UICollectionView = {
         let photoCollectionLayout = UICollectionViewFlowLayout()
@@ -25,6 +28,14 @@ class PhotoViewController: UIViewController {
         
         navigationController?.navigationBar.isHidden = false
         self.title = "Photo Gallery"
+        
+        facade.subscribe(self)
+        facade.addImagesWithTimer(time: 0.3, repeat: photosArray.count)
+    }
+    
+    deinit {
+        facade.rechargeImageLibrary()
+        facade.removeSubscription(for: self)
     }
     
     private func setupConstraints() {
@@ -38,7 +49,7 @@ class PhotoViewController: UIViewController {
 }
 
 // - MARK: Collection view
-extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
+extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photosArray.count
@@ -71,5 +82,15 @@ extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
         return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    }
+}
+
+extension PhotoViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        photosArray = []
+        for i in images {
+            photosArray.append(i)
+        }
+        photosCollection.reloadData()
     }
 }
