@@ -1,36 +1,53 @@
-//
-//  AppDelegate.swift
-//  Navigation
-//
-//  Created by Denis Fomichev on 26.11.2021.
-//
-
 import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
+    var window: UIWindow?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        window = UIWindow()
+        
+        //MARK: feedVC
+        let feedBarItem = UITabBarItem()
+        feedBarItem.title = "Feed"
+        feedBarItem.image = UIImage(systemName: "doc.plaintext")
+        feedBarItem.selectedImage = UIImage(systemName: "doc.plaintext.fill")
+        let feedVC = FeedViewController()
+        feedVC.view.backgroundColor = .white
+        feedVC.title = "Feed"
+        let feedNavigationController = UINavigationController(rootViewController: feedVC)
+        feedVC.tabBarItem = feedBarItem
+        
+        //MARK: profileVC
+        let profileBarItem = UITabBarItem()
+        profileBarItem.title = "Profile"
+        profileBarItem.image = UIImage(systemName: "folder")
+        profileBarItem.selectedImage = UIImage(systemName: "folder.fill")
+//        let profileVC = ProfileViewController()
+//        profileVC.title = "Profile"
+        
+        //MARK: loginVC
+        let loginVC = LogInViewController()
+        loginVC.view.backgroundColor = .white
+        let loginNavigationController = UINavigationController(rootViewController: loginVC)
+        loginVC.tabBarItem = profileBarItem
+        
+        let factory = LoginFactory()
+        let inspector = factory.createLoginInspector()
+        loginVC.delegate = inspector
+        
+        //MARK: Tab Bar
+        let tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = .white
+        tabBarController.viewControllers = [feedNavigationController, loginNavigationController]
+        tabBarController.selectedIndex = 0
+        
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
+        
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-    }
-
-
 }
 
