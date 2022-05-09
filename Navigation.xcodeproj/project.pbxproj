@@ -29,6 +29,10 @@
 		7C8FADDB27517506009FB054 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8FADDA27517506009FB054 /* FeedViewController.swift */; };
 		7C8FADDD27517520009FB054 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8FADDC2751751F009FB054 /* ProfileViewController.swift */; };
 		7C8FADDF27517FA1009FB054 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8FADDE27517FA1009FB054 /* PostViewController.swift */; };
+		7C95511228295C3E00E15970 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C95511128295C3E00E15970 /* CustomButton.swift */; };
+		7C955114282966D900E15970 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C955113282966D900E15970 /* Word.swift */; };
+		7C955116282967E000E15970 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C955115282967E000E15970 /* CustomTextField.swift */; };
+		7C95511828296BD100E15970 /* CustomButtonTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C95511728296BD100E15970 /* CustomButtonTF.swift */; };
 		7CAE2E03276FDA11003922D9 /* UIView_extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAE2E02276FDA11003922D9 /* UIView_extension.swift */; };
 		7CCCB66E2770DC5100993A98 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCCB66D2770DC5100993A98 /* PostTableViewCell.swift */; };
 		7CDB466F27581BFA00D19FFE /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDB466E27581BFA00D19FFE /* ProfileHeaderView.swift */; };
@@ -92,6 +96,10 @@
 		7C8FADDC2751751F009FB054 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		7C8FADDE27517FA1009FB054 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		7C8FADE0275186B3009FB054 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		7C95511128295C3E00E15970 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		7C955113282966D900E15970 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		7C955115282967E000E15970 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		7C95511728296BD100E15970 /* CustomButtonTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonTF.swift; sourceTree = "<group>"; };
 		7CAE2E02276FDA11003922D9 /* UIView_extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_extension.swift; sourceTree = "<group>"; };
 		7CCCB66D2770DC5100993A98 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		7CDB466E27581BFA00D19FFE /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -158,6 +166,7 @@
 				7C8FADE0275186B3009FB054 /* Post.swift */,
 				7CF845AA27763F2300983EAB /* PhotosData.swift */,
 				7C5EC5D6281AED58002EE9C0 /* User.swift */,
+				7C955113282966D900E15970 /* Word.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -166,6 +175,9 @@
 			isa = PBXGroup;
 			children = (
 				7CAE2E02276FDA11003922D9 /* UIView_extension.swift */,
+				7C95511128295C3E00E15970 /* CustomButton.swift */,
+				7C95511728296BD100E15970 /* CustomButtonTF.swift */,
+				7C955115282967E000E15970 /* CustomTextField.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -454,7 +466,9 @@
 				7CAE2E03276FDA11003922D9 /* UIView_extension.swift in Sources */,
 				7C2BA5BE2821AFF900499265 /* LoginChecker.swift in Sources */,
 				7CF845AB27763F2300983EAB /* PhotosData.swift in Sources */,
+				7C95511828296BD100E15970 /* CustomButtonTF.swift in Sources */,
 				7C5EC5D9281AEEAB002EE9C0 /* CurrentUserService.swift in Sources */,
+				7C955116282967E000E15970 /* CustomTextField.swift in Sources */,
 				7CF87E542751D44600499AB6 /* InfoViewController.swift in Sources */,
 				7C8FADC12751704C009FB054 /* AppDelegate.swift in Sources */,
 				7C5EC5D7281AED58002EE9C0 /* User.swift in Sources */,
@@ -463,6 +477,8 @@
 				7C2BA5C62821B0B100499265 /* LoginFactory.swift in Sources */,
 				7C8FADDF27517FA1009FB054 /* PostViewController.swift in Sources */,
 				7CF845A927763CAE00983EAB /* PhotosViewController.swift in Sources */,
+				7C955114282966D900E15970 /* Word.swift in Sources */,
+				7C95511228295C3E00E15970 /* CustomButton.swift in Sources */,
 				7C2BA5C22821B05A00499265 /* LoginInspector.swift in Sources */,
 				7C5EC5DB281AF525002EE9C0 /* TestUserService.swift in Sources */,
 				7CF845AD2776477800983EAB /* PhotosCollectionViewCell.swift in Sources */,
